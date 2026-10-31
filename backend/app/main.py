@@ -8,7 +8,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from statistics import median
-from typing import Any
+from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -27,7 +27,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http
 
 class ReplayRequest(BaseModel):
     source_run_id: str
-    scenario: str | None = None
+    scenario: Optional[str] = None
 
 
 class Thresholds(BaseModel):
@@ -57,7 +57,7 @@ def init_db() -> None:
         conn.execute("CREATE TABLE IF NOT EXISTS evaluations (id TEXT PRIMARY KEY, created_at TEXT, agent_label TEXT, result_json TEXT)")
 
 
-def event(event_id: str, turn: str, kind: str, title: str, at: str, duration: int = 0, status: str = "success", tool: str | None = None, args: Any = None, result: Any = None, error: Any = None, tokens: int | None = None) -> dict:
+def event(event_id: str, turn: str, kind: str, title: str, at: str, duration: int = 0, status: str = "success", tool: Optional[str] = None, args: Any = None, result: Any = None, error: Any = None, tokens: Optional[int] = None) -> dict:
     d = {"id": event_id, "parent_id": turn, "type": kind, "timestamp": at, "duration_ms": duration, "status": status, "title": title}
     if tool: d["tool_name"] = tool
     if args is not None: d["arguments"] = args
@@ -139,7 +139,7 @@ def run_row(row: sqlite3.Row) -> dict:
     return {k:row[k] for k in row.keys() if k != "trace_path"}
 
 
-def detect(trace: dict, cfg: Thresholds | None = None) -> list[dict]:
+def detect(trace: dict, cfg: Optional[Thresholds] = None) -> list[dict]:
     cfg = cfg or Thresholds()
     ev = trace["events"]; alerts=[]
     calls=[e for e in ev if e["type"] == "tool_call"]

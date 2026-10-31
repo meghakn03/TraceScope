@@ -4,13 +4,13 @@ TraceScope is a local-first trace replay and evaluation workbench. It helps insp
 
 ## Start locally
 
-Requirements: Python 3.10+ and Node.js 20+. Every project dependency is free and open source. The app makes no model calls and does not connect to external MCP servers. After cloning, start both services with one command:
+Requirements: Python 3.9+ and Node.js 20+. Every project dependency is free and open source. The app makes no model calls and does not connect to external MCP servers. After cloning, start both services with one command:
 
 ```sh
 ./start.sh
 ```
 
-The script creates a local Python virtual environment, installs missing dependencies, and starts the API and frontend. Open [http://localhost:5173](http://localhost:5173). Press `Ctrl+C` to stop both services. Dependency installation needs internet access the first time.
+The script creates a local Python virtual environment, installs missing dependencies, and starts the API and frontend. It reuses a running TraceScope API or picks the next free port if port 8000 is occupied. Open [http://localhost:5173](http://localhost:5173). Press `Ctrl+C` to stop the services started by the script. Dependency installation needs internet access the first time.
 
 For manual startup instead:
 

@@ -29,11 +29,45 @@ trap cleanup EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-.venv/bin/uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 &
-api_pid=$!
-npm run dev -- --host 127.0.0.1 &
+api_port=${TRACESCOPE_API_PORT:-8000}
+api_health() {
+  .venv/bin/python -c "import json; from urllib.request import urlopen; data=json.loads(urlopen('http://127.0.0.1:${api_port}/api/health', timeout=0.5).read()); assert data.get('status') == 'ok' and data.get('storage') == 'sqlite + versioned JSON'" >/dev/null 2>&1
+}
+port_busy() {
+  .venv/bin/python -c "import socket,sys; s=socket.socket(); s.settimeout(0.3); sys.exit(0 if s.connect_ex(('127.0.0.1', int(sys.argv[1]))) == 0 else 1)" "$1"
+}
+
+if api_health; then
+  echo "Found an existing TraceScope API on port $api_port; reusing it."
+else
+  while port_busy "$api_port"; do
+    if [ "${TRACESCOPE_API_PORT+x}" = x ]; then
+      echo "Port $api_port is already in use. Set TRACESCOPE_API_PORT to a free port and retry." >&2
+      exit 1
+    fi
+    api_port=$((api_port + 1))
+  done
+
+  .venv/bin/uvicorn backend.app.main:app --host 127.0.0.1 --port "$api_port" &
+  api_pid=$!
+  attempt=0
+  until api_health; do
+    if ! kill -0 "$api_pid" 2>/dev/null; then
+      echo "Could not start the API on port $api_port. Review the API error above." >&2
+      exit 1
+    fi
+    attempt=$((attempt + 1))
+    if [ "$attempt" -ge 30 ]; then
+      echo "The API did not become ready within 30 seconds. Review the API output above." >&2
+      exit 1
+    fi
+    sleep 1
+  done
+fi
+
+TRACESCOPE_API_PORT=$api_port npm run dev &
 web_pid=$!
 
-echo "TraceScope is starting. Open http://localhost:5173"
+echo "TraceScope is starting. Open http://localhost:5173 (API on port $api_port)"
 echo "Press Ctrl+C to stop both services."
 wait
