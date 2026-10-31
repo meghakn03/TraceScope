@@ -1,0 +1,17 @@
+{
+  "schema_version":"1.0","run_id":"example-loop-001","scenario":"loop","started_at":"2026-01-15T10:14:22.000Z","agent_config":{"label":"synthetic-baseline","mode":"synthetic","model":"none"},
+  "events":[
+    {"id":"e1","parent_id":"turn-1","type":"model_request","timestamp":"2026-01-15T10:14:22.000Z","duration_ms":0,"status":"success","title":"Calculate 18% of 240"},
+    {"id":"e2","parent_id":"turn-1","type":"tool_call","timestamp":"2026-01-15T10:14:22.060Z","duration_ms":75,"status":"success","title":"Calculate percentage","tool_name":"calculator","arguments":{"expression":"240 * 0.18"}},
+    {"id":"e3","parent_id":"turn-1","type":"tool_result","timestamp":"2026-01-15T10:14:22.135Z","duration_ms":0,"status":"success","title":"Result: 43.2","result":{"value":43.2}},
+    {"id":"e4","parent_id":"turn-1","type":"tool_call","timestamp":"2026-01-15T10:14:22.270Z","duration_ms":75,"status":"success","title":"Calculate percentage","tool_name":"calculator","arguments":{"expression":"240 * 0.18"}},
+    {"id":"e5","parent_id":"turn-1","type":"tool_result","timestamp":"2026-01-15T10:14:22.345Z","duration_ms":0,"status":"success","title":"Result: 43.2","result":{"value":43.2}},
+    {"id":"e6","parent_id":"turn-1","type":"tool_call","timestamp":"2026-01-15T10:14:22.480Z","duration_ms":75,"status":"success","title":"Calculate percentage","tool_name":"calculator","arguments":{"expression":"240 * 0.18"}},
+    {"id":"e7","parent_id":"turn-1","type":"tool_result","timestamp":"2026-01-15T10:14:22.555Z","duration_ms":0,"status":"success","title":"Result: 43.2","result":{"value":43.2}},
+    {"id":"e8","parent_id":"turn-1","type":"tool_call","timestamp":"2026-01-15T10:14:22.690Z","duration_ms":75,"status":"success","title":"Calculate percentage","tool_name":"calculator","arguments":{"expression":"240 * 0.18"}},
+    {"id":"e9","parent_id":"turn-1","type":"tool_result","timestamp":"2026-01-15T10:14:22.765Z","duration_ms":0,"status":"success","title":"Result: 43.2","result":{"value":43.2}},
+    {"id":"e10","parent_id":"turn-1","type":"tool_call","timestamp":"2026-01-15T10:14:22.900Z","duration_ms":75,"status":"success","title":"Calculate percentage","tool_name":"calculator","arguments":{"expression":"240 * 0.18"}},
+    {"id":"e11","parent_id":"turn-1","type":"tool_result","timestamp":"2026-01-15T10:14:22.975Z","duration_ms":0,"status":"success","title":"Result: 43.2","result":{"value":43.2}},
+    {"id":"e12","parent_id":"turn-1","type":"model_response","timestamp":"2026-01-15T10:14:23.200Z","duration_ms":58,"status":"success","title":"18% of 240 is 43.2.","token_count":128}
+  ],"outcome":"success","review_notes":null,"metadata":{"synthetic":true,"duration_ms":1258,"token_count":128}
+}

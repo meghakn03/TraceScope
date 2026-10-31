@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-success-001",
+  "scenario": "success",
+  "started_at": "2026-01-15T10:14:22.000Z",
+  "agent_config": {"label": "synthetic-baseline", "mode": "synthetic", "model": "none"},
+  "events": [
+    {"id":"e1","parent_id":"turn-1","type":"model_request","timestamp":"2026-01-15T10:14:22.000Z","duration_ms":0,"status":"success","title":"Find the latest Python release"},
+    {"id":"e2","parent_id":"turn-1","type":"tool_call","timestamp":"2026-01-15T10:14:22.080Z","duration_ms":142,"status":"success","title":"Search release notes","tool_name":"search","arguments":{"query":"latest Python release"}},
+    {"id":"e3","parent_id":"turn-1","type":"tool_result","timestamp":"2026-01-15T10:14:22.222Z","duration_ms":0,"status":"success","title":"Found Python 3.13.2 release notes","result":{"summary":"Python 3.13.2 released Feb 2025"}},
+    {"id":"e4","parent_id":"turn-1","type":"model_response","timestamp":"2026-01-15T10:14:22.310Z","duration_ms":92,"status":"success","title":"Python 3.13.2 is the latest release in this synthetic dataset.","token_count":184}
+  ],
+  "outcome":"success","review_notes":null,"metadata":{"synthetic":true,"duration_ms":402,"token_count":184}
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tracescope.local/schema/trace-v1.schema.json",
+  "title": "TraceScope trace v1.0",
+  "type": "object",
+  "required": ["schema_version", "run_id", "scenario", "started_at", "agent_config", "events", "outcome"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "scenario": {"type": "string", "minLength": 1},
+    "started_at": {"type": "string", "format": "date-time"},
+    "agent_config": {"type": "object", "required": ["label"], "properties": {"label": {"type": "string"}, "mode": {"type": "string"}, "model": {"type": "string"}}, "additionalProperties": true},
+    "events": {"type": "array", "items": {"$ref": "#/$defs/event"}},
+    "outcome": {"type": "string", "enum": ["success", "partial", "error", "timeout"]},
+    "review_notes": {"type": ["string", "null"]},
+    "metadata": {"type": "object", "properties": {"synthetic": {"type": "boolean"}, "duration_ms": {"type": "integer", "minimum": 0}, "token_count": {"type": "integer", "minimum": 0}, "replay_of": {"type": "string"}}, "additionalProperties": true}
+  },
+  "$defs": {"event": {"type": "object", "required": ["id", "type", "timestamp", "duration_ms", "status", "title"], "properties": {"id": {"type": "string"}, "parent_id": {"type": ["string", "null"]}, "correlation_id": {"type": ["string", "null"]}, "type": {"type": "string", "enum": ["model_request", "model_response", "tool_call", "tool_result", "tool_error"]}, "timestamp": {"type": "string", "format": "date-time"}, "duration_ms": {"type": "integer", "minimum": 0}, "status": {"type": "string", "enum": ["success", "error", "timeout", "partial"]}, "title": {"type": "string"}, "tool_name": {"type": "string"}, "arguments": {}, "result": {}, "error": {"type": "object"}, "token_count": {"type": "integer", "minimum": 0}}, "additionalProperties": true}}
+}
