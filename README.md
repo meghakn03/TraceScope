@@ -1,3 +1,5 @@
+**Tech stack:** Python, FastAPI, React, TypeScript, Vite, Pydantic, SQLite, Docker Compose
+
 # TraceScope
 
 TraceScope is a local-first trace replay and evaluation workbench. It helps inspect what an agent did, find likely loops and failures, replay recorded behavior without a model, and compare runs.
